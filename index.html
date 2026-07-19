@@ -152,7 +152,7 @@ h3{font-family:'Spectral',serif;font-weight:600;font-size:1.35rem;line-height:1.
   margin:20px 0 6px;border:1px solid var(--line);border-radius:8px;
   background:#FBFCFE;padding:18px 16px 8px;overflow-x:auto;
 }
-.fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.fig svg{display:block;margin:0 auto;width:100%;max-width:680px;height:auto}
 .fig .cap{
   font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);
   text-align:center;padding:10px 6px 6px;letter-spacing:.03em;
@@ -171,7 +171,7 @@ h3{font-family:'Spectral',serif;font-weight:600;font-size:1.35rem;line-height:1.
 .imgrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 6px}
 .imgrow.tri{grid-template-columns:1fr 1fr 1fr}
 .imgrow figure{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
-.imgrow img{width:100%;height:190px;object-fit:cover;display:block}
+.imgrow img{width:100%;height:210px;object-fit:contain;display:block;background:#FBFCFE;padding:6px}
 .imgrow figcaption{
   font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);
   padding:8px 10px;border-top:1px solid var(--line);
@@ -190,16 +190,40 @@ h3{font-family:'Spectral',serif;font-weight:600;font-size:1.35rem;line-height:1.
 .mini .imgrow{margin:14px 0 2px}
 .mini .imgrow img{height:150px}
 
-/* ---------- Motion ---------- */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in{opacity:1;transform:none}
-.card,.mini,.pub,.skill-col{transition:transform .25s ease,box-shadow .25s ease}
+/* ---------- Motion: "focus pull" ---------- */
+/* Content arrives defocused and snaps into focus, like racking an objective lens. */
+.reveal{
+  opacity:0;transform:translateY(18px) scale(.985);filter:blur(9px);
+  transition:opacity .85s cubic-bezier(.22,.9,.24,1),
+             transform .85s cubic-bezier(.22,.9,.24,1),
+             filter .85s cubic-bezier(.22,.9,.24,1);
+}
+.reveal.in{opacity:1;transform:none;filter:blur(0)}
+.reveal:nth-child(2){transition-delay:.08s}
+.reveal:nth-child(3){transition-delay:.16s}
+
+/* Spectrum scroll-progress bar: visible spectrum, 380-700 nm */
+#spectrum-bar{
+  position:fixed;top:0;left:0;height:3px;width:100%;z-index:60;
+  background:linear-gradient(90deg,#5B2A86,#3D4EC9,#1E88E5,#00A896,#7CB518,#F4B942,#E4572E);
+  transform-origin:left center;transform:scaleX(0);
+}
+
+.card,.mini,.pub,.skill-col{transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s ease,border-color .3s ease}
 .card:hover,.mini:hover,.pub:hover,.skill-col:hover{
   transform:translateY(-3px);
-  box-shadow:0 10px 30px rgba(61,78,201,.10);
+  border-color:#C3C9F2;
+  box-shadow:0 14px 40px rgba(61,78,201,.12),0 2px 8px rgba(18,22,28,.05);
 }
-.imgrow figure{transition:transform .3s ease}
-.imgrow figure:hover{transform:scale(1.02)}
+/* AR-coating sheen on figures: faint violet-green interference tint on hover */
+.imgrow figure{transition:transform .35s cubic-bezier(.22,.9,.24,1),box-shadow .35s ease;position:relative}
+.imgrow figure::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(115deg,rgba(122,90,248,.14),rgba(0,168,150,.10) 55%,transparent 80%);
+  transition:opacity .35s ease;
+}
+.imgrow figure:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(18,22,28,.14)}
+.imgrow figure:hover::after{opacity:1}
 .hero-fade{animation:heroIn .9s ease both}
 .hero-fade:nth-child(2){animation-delay:.15s}
 @keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
@@ -210,13 +234,16 @@ h3{font-family:'Spectral',serif;font-weight:600;font-size:1.35rem;line-height:1.
 }
 @keyframes photon{0%{top:0;opacity:0}6%{opacity:1}94%{opacity:1}100%{top:calc(100% - 10px);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .reveal{opacity:1;transform:none}
+  .reveal{opacity:1;transform:none;filter:none}
   .rail::after{display:none}
 }
 .svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#5A6472}
 .svg-lbl-a{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#3D4EC9}
 .svg-box{fill:#fff;stroke:#D9DDE4;stroke-width:1.5;rx:6}
 .svg-box-a{fill:#E8EAFB;stroke:#3D4EC9;stroke-width:1.5;rx:6}
+.ex-block{margin:20px 0 8px;padding:16px 16px 8px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;background:#FBFCFE}
+.ex-title{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.ex-desc{font-size:.88rem;color:var(--muted);margin-bottom:4px}
 .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
 .mini{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -350,7 +377,7 @@ footer{
 }
 .mini:nth-child(2n) .labnote{transform:rotate(2.5deg)}
 .labnote:hover{transform:rotate(0deg) scale(1.08);box-shadow:0 14px 30px rgba(18,22,28,.24);z-index:5;position:relative}
-.labnote img{width:100%;height:96px;object-fit:cover;object-position:top;border-radius:2px;display:block}
+.labnote img{width:100%;height:170px;object-fit:contain;object-position:top;border-radius:2px;display:block;background:#fff}
 .labnote figcaption{
   font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);
   text-align:center;padding-top:6px;letter-spacing:.02em;
@@ -840,14 +867,18 @@ footer{
             <figcaption>Quasi-static axial crush test of the welded joint</figcaption>
           </figure>
         </div>
-        <div class="imgrow">
+        <div class="imgrow tri">
+          <figure>
+            <img src="fsw-flex-test.jpg" alt="Three-point flexural test of the welded pipe on the universal testing machine" loading="lazy">
+            <figcaption>Three-point flexural test on the 1000 kN UTM</figcaption>
+          </figure>
           <figure>
             <img src="fsw-crash-plot.jpg" alt="Load versus elongation plot from the crashworthiness test" loading="lazy">
-            <figcaption>Crush test result: load vs. elongation of the welded pipe</figcaption>
+            <figcaption>Crush test: load vs. elongation (F<sub>max</sub> 64.43 kN)</figcaption>
           </figure>
           <figure>
             <img src="fsw-flex-plot.jpg" alt="Load versus elongation plot from the flexural test" loading="lazy">
-            <figcaption>Flexural test result: failure at the weld plane</figcaption>
+            <figcaption>Flexural test: failure at the weld plane (7.35 kN)</figcaption>
           </figure>
         </div>
         <div class="gauge-row">
@@ -883,12 +914,22 @@ footer{
            for the national SAEISS competition.</p>
         <div class="imgrow">
           <figure>
-            <img src="ebike-cad.png" alt="CAD render of the ENVISION electric bike" loading="lazy">
-            <figcaption>CAD model of the ENVISION e-bike</figcaption>
+            <img src="ebike-cad.png" alt="3D CAD view of the ENVISION electric bike" loading="lazy">
+            <figcaption>3D CAD model of the ENVISION e-bike (Fusion 360)</figcaption>
           </figure>
           <figure>
             <img src="ebike-built.png" alt="The built ENVISION electric bike prototype" loading="lazy">
             <figcaption>The fabricated prototype</figcaption>
+          </figure>
+        </div>
+        <div class="imgrow">
+          <figure>
+            <img src="ebike-cae.png" alt="CAE stress analysis of the e-bike frame" loading="lazy">
+            <figcaption>CAE analysis of the frame</figcaption>
+          </figure>
+          <figure>
+            <img src="ebike-rider.png" alt="Rider triangle ergonomics design of the e-bike" loading="lazy">
+            <figcaption>Rider triangle designed for a relaxed cruiser position</figcaption>
           </figure>
         </div>
         <div class="stats">
@@ -924,13 +965,39 @@ footer{
     <p>Selected laboratory projects from the M.Sc. Scientific Instrumentation program at EAH Jena.</p>
   </div>
   <div class="mini-grid">
-    <div class="mini">
+    <div class="mini" style="grid-column:1/-1">
       <h4>Ray Tracing for Optical Analysis of Solid Models</h4>
       <div class="org">Optical Instruments Laboratory</div>
-      <p>Sequential and non-sequential ray tracing of solid optical models for system-level optical analysis in TracePro: source definition, surface properties, and irradiance evaluation on detector planes.</p>
-      <div class="imgrow">
-        <figure><img src="ray-trace1.png" alt="Ray tracing simulation of a solid optical model" loading="lazy"><figcaption>Traced rays through the solid model</figcaption></figure>
-        <figure><img src="ray-trace2.jpg" alt="Irradiance analysis output" loading="lazy"><figcaption>Irradiance map on the detector plane</figcaption></figure>
+      <p>Monte Carlo ray tracing of solid optical models in TracePro across three exercises: an f/4 imaging lens, a bent fiber-optic light-pipe, and polarized reflection off a titanium surface.</p>
+
+      <div class="ex-block">
+        <div class="ex-title">Exercise 1 · f/4 biconvex lens, f = 100 mm</div>
+        <p class="ex-desc">Symmetrical biconvex lens (R = ±100 mm, semi-diameter 12.5 mm) with a grid source and a perfect-absorber detector; irradiance evaluated at 100 mm and 200 mm.</p>
+        <div class="imgrow tri">
+          <figure><img src="rt-ex1-design.jpg" alt="TracePro lens element definition for the f/4 lens" loading="lazy"><figcaption>Lens design: surface radii of curvature input</figcaption></figure>
+          <figure><img src="rt-ex1-trace.jpg" alt="Ray trace of the f/4 lens with detector at focal plane" loading="lazy"><figcaption>Ray trace with detector at 100 mm</figcaption></figure>
+          <figure><img src="rt-ex1-irr.jpg" alt="Irradiance map at the detector" loading="lazy"><figcaption>Irradiance map at the focal plane</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="ex-block">
+        <div class="ex-title">Exercise 2 · Fiber-optic light-pipe, straight &amp; 90° bend</div>
+        <p class="ex-desc">Core Ø1.5 mm × 150 mm with 0.3 mm N-BK7 cladding. Straight B270 core captured 92.89% of incident energy; after the 90° bend, N-BAK4 (95.9%) outperformed B270 (85%) as core material.</p>
+        <div class="imgrow tri">
+          <figure><img src="rt-ex2-design.jpg" alt="Grid source definition for the light-pipe model" loading="lazy"><figcaption>Light-pipe design: grid source input</figcaption></figure>
+          <figure><img src="rt-ex2-trace.jpg" alt="Ray trace of the straight fiber optic" loading="lazy"><figcaption>Guided rays in the straight pipe</figcaption></figure>
+          <figure><img src="rt-ex2-irr.jpg" alt="Irradiance map at the fiber end" loading="lazy"><figcaption>Irradiance at the pipe exit face</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="ex-block">
+        <div class="ex-title">Exercise 3 · Polarized reflection off titanium</div>
+        <p class="ex-desc">Titanium sample (n ≈ 1.876) illuminated with -45° linear polarized light at the Brewster angle (61.94°); the polarization maps show the reflected light becoming elliptically/circularly polarized.</p>
+        <div class="imgrow tri">
+          <figure><img src="rt-ex3-design.jpg" alt="Titanium surface and detector definition" loading="lazy"><figcaption>Sample design: titanium surface + detector</figcaption></figure>
+          <figure><img src="rt-ex3-trace.jpg" alt="Ray trace of the polarized beam reflecting off titanium" loading="lazy"><figcaption>Polarized beam reflecting at Brewster angle</figcaption></figure>
+          <figure><img src="rt-ex3-polmap.jpg" alt="Polarization map of incident rays at the titanium surface" loading="lazy"><figcaption>Polarization map at the titanium surface</figcaption></figure>
+        </div>
       </div>
       <div class="labnote-wrap">
         <figure class="labnote">
@@ -944,7 +1011,7 @@ footer{
       <div class="org">Optical Instruments Laboratory (OI 3)</div>
       <p>Wavefront measurement and aberration analysis of optical systems using laboratory wavefront sensing, evaluating aberration content from measured wavefront maps.</p>
       <div class="imgrow">
-        <figure><img src="wavefront1.png" alt="Measured wavefront map" loading="lazy"><figcaption>Measured wavefront map</figcaption></figure>
+        <figure><img src="wavefront1.png" alt="Shack-Hartmann wavefront sensing principle from the report" loading="lazy"><figcaption>Shack-Hartmann wavefront sensing (from the report)</figcaption></figure>
         <figure><img src="wavefront2.png" alt="Wavefront aberration analysis" loading="lazy"><figcaption>Aberration analysis output</figcaption></figure>
       </div>
       <div class="labnote-wrap">
@@ -1134,6 +1201,25 @@ footer{
     });
   }, {threshold:.12});
   els.forEach(function(el){ io.observe(el); });
+})();
+
+/* ---------- Spectrum scroll-progress bar ---------- */
+(function(){
+  var bar = document.createElement('div');
+  bar.id = 'spectrum-bar';
+  bar.setAttribute('aria-hidden','true');
+  document.body.appendChild(bar);
+  var ticking = false;
+  function update(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+  update();
 })();
 
 /* ---------- Lightbox: click any project, lab-note, or certificate image to enlarge ---------- */
