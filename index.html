@@ -554,6 +554,15 @@ footer{
           <div class="cap">Fig. 2 · Evaluation pipeline from raw frames to standardized metrics and defect maps</div>
         </div>
 
+        <div class="imgrow tri">
+          <figure><img src="thesis-ptc.png" alt="Illustrative EMVA 1288 photon transfer curve" loading="lazy"><figcaption>Photon transfer curve: shot-noise fit, read-noise floor, saturation (illustrative)</figcaption></figure>
+          <figure><img src="thesis-defects.png" alt="Illustrative defective pixel and particle detection result" loading="lazy"><figcaption>Hot/dead pixels and surface particles flagged by MAD + Z-score (illustrative)</figcaption></figure>
+          <figure><img src="thesis-pixels.png" alt="Illustrative pixel-level view of defective pixels" loading="lazy"><figcaption>Pixel-level view: outliers vs. neighbourhood statistics (illustrative)</figcaption></figure>
+        </div>
+        <div class="imgrow">
+          <figure style="grid-column:1/-1"><img src="thesis-fpn.png" alt="Illustrative DSNU and PRNU fixed-pattern noise maps" loading="lazy" style="height:240px"><figcaption>Fixed-pattern noise decomposition: DSNU (dark) and PRNU (flat-field) maps per EMVA 1288 (illustrative)</figcaption></figure>
+        </div>
+
         <div class="photo-slot">
           <img src="thesis-setup.jpg" alt="Photo of the dual-illumination test bench" onerror="this.remove()">
           <div class="hint">PHOTO SLOT · add img/thesis-setup.jpg once cleared by ficonTEC</div>
@@ -707,6 +716,11 @@ footer{
             <text x="330" y="104" text-anchor="middle" class="svg-lbl">dispersion phase e^(i(C₂φ² + C₃φ³)) · coefficients optimized by coarse-to-fine search on PSF width</text>
           </svg>
           <div class="cap">Fig. 4 · Reconstruction chain I implemented, from raw interference signal to volumetric scans</div>
+        </div>
+
+        <div class="imgrow">
+          <figure><img src="oct-bscan.png" alt="Illustrative swept-source OCT retinal B-scan showing retinal layers and the foveal pit" loading="lazy"><figcaption>SS-OCT retinal B-scan: layered retina with foveal pit, the kind of image the reconstruction chain produces (illustrative)</figcaption></figure>
+          <figure><img src="oct-ascan.png" alt="Illustrative spectral interferogram and reconstructed A-scan" loading="lazy"><figcaption>From spectral fringes to depth profile: interferogram after k-space resampling, and the FFT-reconstructed A-scan (illustrative)</figcaption></figure>
         </div>
 
         <span class="lbl">Signal processing</span>
