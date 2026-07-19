@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharan Kandasamy · Optical & Photonics Engineer</title>
+    <meta name="description" content="Sharan Kandasamy: optical and photonics engineer specializing in image sensor characterization, OCT, machine vision, and opto-mechanical instrumentation. Based in Bremen, Germany.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #F4F5F8;
+            --paper-deep: #EAECF2;
+            --card: #FFFFFF;
+            --ink: #12161C;
+            --muted: #5A6472;
+            --line: #D5DAE3;
+            --accent: #3D4EC9;
+            --accent-glow: #5B6AEF;
+            --accent-soft: #E8EAFB;
+            --accent-2: #7A8AF0;
+            --accent-warm: #F4B942;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 3px rgba(18, 22, 28, 0.06);
+            --shadow-md: 0 8px 28px rgba(18, 22, 28, 0.09), 0 2px 6px rgba(18, 22, 28, 0.04);
+            --shadow-lg: 0 18px 50px rgba(61, 78, 201, 0.14), 0 4px 16px rgba(18, 22, 28, 0.07);
+            --shadow-xl: 0 28px 70px rgba(61, 78, 201, 0.18), 0 6px 24px rgba(18, 22, 28, 0.10);
+            --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+            --font-sans: 'Archivo', system-ui, -apple-system, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', monospace;
+            --transition-smooth: cubic-bezier(0.22, 0.9, 0.24, 1);
+            --transition-bounce: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 16.5px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle optical noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+        }
+
+        /* Subtle floating caustic orbs */
+        .caustic-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(90px);
+            opacity: 0.06;
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+        .caustic-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            top: -15%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+        .caustic-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-2);
+            bottom: -12%;
+            right: -8%;
+            animation-delay: -7s;
+            animation-duration: 24s;
+        }
+        .caustic-orb:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            background: #00A896;
+            top: 50%;
+            left: 55%;
+            animation-delay: -14s;
+            animation-duration: 28s;
+        }
+        @keyframes floatOrb {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(60px, -40px) scale(1.15);
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(-50px, -30px) scale(1.1);
+            }
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.25s var(--transition-smooth);
+        }
+        a:hover {
+            text-decoration: none;
+            color: var(--accent-glow);
+        }
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2.5px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        /* ---------- Nav ---------- */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(244, 245, 248, 0.88);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            border-bottom: 1px solid transparent;
+            box-shadow: 0 1px 0 rgba(18, 22, 28, 0.06);
+            transition: all 0.4s var(--transition-smooth);
+        }
+        nav.scrolled {
+            box-shadow: 0 2px 20px rgba(18, 22, 28, 0.10);
+            border-bottom-color: var(--line);
+            background: rgba(244, 245, 248, 0.94);
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 15px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .nav-name {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.08rem;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+            transition: color 0.3s var(--transition-smooth);
+        }
+        .nav-name:hover {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 8px 14px;
+            border-radius: 100px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+            background: var(--accent-soft);
+            text-decoration: none;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 18px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: transform 0.3s var(--transition-snappy);
+        }
+        .nav-links a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ---------- Hero ---------- */
+        header.hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 90px 28px 72px;
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 56px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        /* Light beams from top-left */
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: -60px;
+            width: 500px;
+            height: 700px;
+            background: radial-gradient(ellipse at 20% 25%, rgba(61, 78, 201, 0.09) 0%, transparent 70%),
+                radial-gradient(ellipse at 15% 20%, rgba(122, 138, 240, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: heroGlow 8s ease-in-out infinite;
+        }
+        @keyframes heroGlow {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.08);
+            }
+        }
+        .hero-fade {
+            position: relative;
+            z-index: 2;
+        }
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--accent-soft);
+            border-radius: 100px;
+            animation: fadeInUp 0.8s var(--transition-smooth) both;
+        }
+        h1 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: clamp(2.4rem, 5.6vw, 3.8rem);
+            line-height: 1.10;
+            letter-spacing: -0.015em;
+            margin-bottom: 22px;
+            animation: fadeInUp 0.8s var(--transition-smooth) 0.1s both;
+        }
+        h1 .thin {
+            font-weight: 400;
+            color: var(--muted);
+            position: relative;
+        }
+        h1 .thin::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-2), transparent);
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+        .hero-sub {
+            font-size: 1.14rem;
+            color: var(--muted);
+            max-width: 56ch;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s var(--transition-smooth) 0.2s both;
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+            animation: fadeInUp 0.8s var(--transition-smooth) 0.3s both;
+        }
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-meta span::before {
+            content: "·";
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .portrait {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px solid var(--line);
+            background: var(--accent-soft);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 0.8s var(--transition-smooth) 0.2s both;
+            box-shadow: 0 0 0 8px rgba(61, 78, 201, 0.04), 0 0 60px rgba(61, 78, 201, 0.10);
+            transition: box-shadow 0.5s var(--transition-smooth), transform 0.5s var(--transition-smooth);
+        }
+        .portrait:hover {
+            box-shadow: 0 0 0 14px rgba(61, 78, 201, 0.08), 0 0 80px rgba(61, 78, 201, 0.18);
+            transform: scale(1.03);
+        }
+        .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .portrait .ph {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 22px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent);
+        }
+        .portrait img[src]:not([src=""])~.ph {
+            display: none;
+        }
+
+        /* Hero signature */
+        .hero-signature {
+            margin-top: 28px;
+            opacity: 0.85;
+            animation: fadeInUp 0.8s var(--transition-smooth) 0.4s both;
+        }
+        .hero-sig-cap {
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            color: var(--muted);
+            letter-spacing: 0.07em;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        /* ---------- Sections ---------- */
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 72px 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-head {
+            margin-bottom: 44px;
+        }
+        .section-head .idx {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 2.1rem;
+            letter-spacing: -0.01em;
+            position: relative;
+        }
+        .section-head p {
+            color: var(--muted);
+            max-width: 64ch;
+            margin-top: 12px;
+        }
+
+        /* ---------- Optical rail ---------- */
+        .rail {
+            position: relative;
+            padding-left: 60px;
+        }
+        .rail::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 8px;
+            bottom: 8px;
+            width: 2.5px;
+            background: linear-gradient(var(--accent) 0%, var(--accent-2) 40%, rgba(122, 138, 240, 0.3) 100%);
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(61, 78, 201, 0.25);
+        }
+        .mount {
+            position: relative;
+            margin-bottom: 52px;
+            transition: transform 0.4s var(--transition-smooth);
+        }
+        .mount:last-child {
+            margin-bottom: 0;
+        }
+        .mount::before {
+            content: "";
+            position: absolute;
+            left: -47px;
+            top: 16px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 3px solid var(--accent);
+            z-index: 2;
+            transition: all 0.5s var(--transition-bounce);
+            box-shadow: 0 0 0 0 rgba(61, 78, 201, 0.4);
+        }
+        .mount.in-view::before {
+            box-shadow: 0 0 0 10px rgba(61, 78, 201, 0.12), 0 0 30px rgba(61, 78, 201, 0.25);
+            border-color: var(--accent-glow);
+            transform: scale(1.15);
+        }
+        .mount .pos {
+            position: absolute;
+            left: -60px;
+            top: 44px;
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: var(--muted);
+            writing-mode: vertical-rl;
+            letter-spacing: 0.14em;
+            opacity: 0.7;
+            transition: opacity 0.4s;
+        }
+        .mount.in-view .pos {
+            opacity: 1;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 32px 36px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.45s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background: linear-gradient(125deg, rgba(122, 138, 240, 0.04) 0%, rgba(0, 168, 150, 0.03) 40%, transparent 70%);
+            transition: opacity 0.5s var(--transition-smooth);
+            border-radius: var(--radius);
+        }
+        .card:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .card:hover::after {
+            opacity: 1;
+        }
+        .card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.06em;
+            padding: 5px 11px;
+            border-radius: 100px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 500;
+            transition: all 0.3s var(--transition-smooth);
+        }
+        .tag.ctx {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--muted);
+        }
+        .card:hover .tag.ctx {
+            border-color: #C3C9F2;
+            color: #444;
+        }
+        h3 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .card .org {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+        .card p {
+            color: #333a44;
+            margin-bottom: 14px;
+        }
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+        .card .lbl {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin: 18px 0 6px;
+        }
+        .nda {
+            margin-top: 20px;
+            padding: 12px 16px;
+            border-left: 3px solid var(--accent-2);
+            background: var(--accent-soft);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .fig {
+            margin: 22px 0 8px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            background: #FBFCFE;
+            padding: 20px 18px 10px;
+            overflow-x: auto;
+            transition: all 0.4s var(--transition-smooth);
+        }
+        .fig:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-sm);
+        }
+        .fig svg {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 680px;
+            height: auto;
+        }
+        .fig .cap {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: center;
+            padding: 12px 6px 8px;
+            letter-spacing: 0.03em;
+        }
+        .photo-slot {
+            margin: 18px 0 6px;
+            border: 2px dashed var(--accent-2);
+            border-radius: var(--radius-sm);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-soft);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--transition-smooth);
+        }
+        .photo-slot:hover {
+            border-color: var(--accent);
+            background: #dfe2f8;
+        }
+        .photo-slot img {
+            width: 100%;
+            display: block;
+            border-radius: 7px;
+        }
+        .photo-slot .hint {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-align: center;
+            padding: 18px;
+        }
+        .photo-slot img[data-loaded]~.hint {
+            display: none;
+        }
+        .imgrow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0 8px;
+        }
+        .imgrow.tri {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .imgrow figure {
+            margin: 0;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #fff;
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            cursor: pointer;
+        }
+        .imgrow figure::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background: linear-gradient(115deg, rgba(122, 90, 248, 0.12), rgba(0, 168, 150, 0.08) 55%, transparent 80%);
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+        .imgrow figure:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(18, 22, 28, 0.16);
+            border-color: #C3C9F2;
+        }
+        .imgrow figure:hover::after {
+            opacity: 1;
+        }
+        .imgrow img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            display: block;
+            background: #FBFCFE;
+            padding: 6px;
+            transition: transform 0.5s var(--transition-smooth);
+        }
+        .imgrow figure:hover img {
+            transform: scale(1.03);
+        }
+        .imgrow figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--muted);
+            padding: 10px 12px;
+            border-top: 1px solid var(--line);
+            position: relative;
+            z-index: 2;
+        }
+        @media (max-width: 820px) {
+            .imgrow,
+            .imgrow.tri {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 18px 0 6px;
+        }
+        .stat {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 12px 18px;
+            min-width: 115px;
+            transition: all 0.35s var(--transition-smooth);
+        }
+        .stat:hover {
+            border-color: var(--accent-2);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .stat b {
+            display: block;
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+        .stat span {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        /* ---------- Reveal animation ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px) scale(0.98);
+            filter: blur(7px);
+            transition: opacity 0.8s var(--transition-smooth),
+                transform 0.8s var(--transition-smooth),
+                filter 0.8s var(--transition-smooth);
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+            filter: blur(0);
+        }
+        .reveal:nth-child(2) {
+            transition-delay: 0.06s;
+        }
+        .reveal:nth-child(3) {
+            transition-delay: 0.12s;
+        }
+        .reveal:nth-child(4) {
+            transition-delay: 0.18s;
+        }
+
+        /* Spectrum scroll-progress bar */
+        #spectrum-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3.5px;
+            width: 100%;
+            z-index: 200;
+            background: linear-gradient(90deg, #5B2A86, #3D4EC9, #1E88E5, #00A896, #7CB518, #F4B942, #E4572E);
+            transform-origin: left center;
+            transform: scaleX(0);
+            box-shadow: 0 0 14px rgba(61, 78, 201, 0.5), 0 0 4px rgba(122, 138, 240, 0.35);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ---------- Photon pulse ---------- */
+        .rail::after {
+            content: "";
+            position: absolute;
+            left: 14px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            box-shadow: 0 0 22px 8px rgba(122, 138, 240, 0.6), 0 0 50px 16px rgba(122, 138, 240, 0.25);
+            animation: photon 7.5s linear infinite;
+            z-index: 3;
+        }
+        @keyframes photon {
+            0% {
+                top: 0;
+                opacity: 0;
+                transform: scale(0.6);
+            }
+            5% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            92% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                top: calc(100% - 14px);
+                opacity: 0;
+                transform: scale(0.4);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                filter: none;
+            }
+            .rail::after {
+                display: none;
+            }
+            .caustic-orb {
+                display: none;
+            }
+        }
+        .svg-lbl {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            fill: #5A6472;
+        }
+        .svg-lbl-a {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            fill: #3D4EC9;
+        }
+        .svg-box {
+            fill: #fff;
+            stroke: #D9DDE4;
+            stroke-width: 1.5;
+            rx: 6;
+        }
+        .svg-box-a {
+            fill: #E8EAFB;
+            stroke: #3D4EC9;
+            stroke-width: 1.5;
+            rx: 6;
+        }
+        .ex-block {
+            margin: 22px 0 10px;
+            padding: 18px 18px 10px;
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius-sm);
+            background: #FBFCFE;
+            transition: all 0.35s var(--transition-smooth);
+        }
+        .ex-block:hover {
+            border-left-color: var(--accent-glow);
+            box-shadow: var(--shadow-sm);
+        }
+        .ex-title {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .ex-desc {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+        .mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 10px;
+        }
+        .mini {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 26px 28px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        .mini::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background: linear-gradient(125deg, rgba(122, 138, 240, 0.04) 0%, rgba(0, 168, 150, 0.03) 40%, transparent 70%);
+            transition: opacity 0.5s var(--transition-smooth);
+            border-radius: var(--radius);
+        }
+        .mini:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .mini:hover::after {
+            opacity: 1;
+        }
+        .mini h4 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.08rem;
+            margin-bottom: 6px;
+        }
+        .mini .org {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .mini p {
+            font-size: 0.92rem;
+            color: #333a44;
+        }
+
+        /* ---------- Publications ---------- */
+        .pub {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 26px 30px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--transition-smooth);
+        }
+        .pub:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .pub h4 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.12rem;
+            margin-bottom: 4px;
+        }
+        .pub .venue {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .doi {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            white-space: nowrap;
+            padding: 10px 16px;
+            border: 1.5px solid var(--accent);
+            border-radius: 100px;
+            color: var(--accent);
+            transition: all 0.35s var(--transition-snappy);
+            font-weight: 500;
+        }
+        .doi:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 22px rgba(61, 78, 201, 0.3);
+            transform: scale(1.04);
+        }
+
+        /* ---------- Skills ---------- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .skill-col {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 26px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--transition-smooth);
+        }
+        .skill-col:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .skill-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .skill-col ul {
+            list-style: none;
+        }
+        .skill-col li {
+            font-size: 0.92rem;
+            color: #333a44;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--line);
+            transition: all 0.3s;
+        }
+        .skill-col li:hover {
+            color: var(--accent);
+            padding-left: 4px;
+        }
+        .skill-col li:last-child {
+            border-bottom: none;
+        }
+        .honesty {
+            margin-top: 28px;
+            padding: 20px 24px;
+            border: 1.5px dashed var(--line);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            color: var(--muted);
+            background: transparent;
+            transition: all 0.35s var(--transition-smooth);
+        }
+        .honesty:hover {
+            border-color: var(--accent-2);
+            background: rgba(232, 234, 251, 0.3);
+        }
+
+        /* ---------- Contact ---------- */
+        .contact-card {
+            background: var(--ink);
+            color: #EDEFF4;
+            border-radius: 16px;
+            padding: 56px 52px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 36px;
+            align-items: center;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -15%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(122, 138, 240, 0.18) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        .contact-card h2 {
+            color: #fff;
+        }
+        .contact-card p {
+            color: #B9C0CC;
+            max-width: 52ch;
+            margin-top: 12px;
+        }
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .contact-links a {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: #fff;
+            padding: 13px 24px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            text-align: center;
+            transition: all 0.35s var(--transition-snappy);
+            font-weight: 500;
+        }
+        .contact-links a:hover {
+            border-color: var(--accent-2);
+            color: var(--accent-2);
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 30px rgba(122, 138, 240, 0.3);
+            transform: scale(1.03);
+        }
+
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 28px 52px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-top: 1px solid var(--line);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 820px) {
+            header.hero {
+                grid-template-columns: 1fr;
+                padding-top: 60px;
+                gap: 36px;
+            }
+            .portrait {
+                width: 180px;
+                height: 180px;
+                order: -1;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .mini-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-card {
+                grid-template-columns: 1fr;
+                padding: 40px 30px;
+            }
+            .rail {
+                padding-left: 44px;
+            }
+            .rail::before {
+                left: 11px;
+            }
+            .mount::before {
+                left: -40px;
+            }
+            .mount .pos {
+                display: none;
+            }
+            .pub {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- Lightbox ---------- */
+        .imgrow img,
+        .cert-card img,
+        .labnote img {
+            cursor: zoom-in;
+        }
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(18, 22, 28, 0.94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox figure {
+            max-width: min(90vw, 900px);
+            max-height: 88vh;
+            margin: 0;
+            text-align: center;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 78vh;
+            border-radius: 8px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+            animation: lbZoomIn 0.35s var(--transition-snappy);
+        }
+        @keyframes lbZoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .lightbox figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: #EDEFF4;
+            margin-top: 16px;
+            letter-spacing: 0.03em;
+        }
+        .lightbox .lb-close {
+            position: absolute;
+            top: 24px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox .lb-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        .lightbox .lb-hint {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        /* ---------- Certifications ---------- */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+        }
+        .cert-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--transition-smooth);
+        }
+        .cert-card:hover {
+            border-color: #C3C9F2;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .cert-card .cert-img-wrap {
+            background: #EEF0F5;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cert-card img {
+            width: 100%;
+            display: block;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+        .cert-card:hover img {
+            transform: scale(1.02);
+        }
+        .cert-card .cert-body {
+            padding: 20px 24px 24px;
+        }
+        .cert-card h4 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.04rem;
+            margin-bottom: 6px;
+        }
+        .cert-card .cert-meta {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+        .cert-ribbon {
+            position: absolute;
+            top: 18px;
+            left: -38px;
+            transform: rotate(-45deg);
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            padding: 5px 44px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+            z-index: 2;
+        }
+        @media (max-width: 820px) {
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- Lab notebook snapshot ---------- */
+        .labnote-wrap {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        .labnote {
+            width: 140px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 7px 7px 11px;
+            box-shadow: 0 8px 20px rgba(18, 22, 28, 0.16);
+            transform: rotate(-3deg);
+            transition: transform 0.4s var(--transition-snappy), box-shadow 0.4s var(--transition-smooth);
+            margin: 0;
+            cursor: pointer;
+        }
+        .mini:nth-child(2n) .labnote {
+            transform: rotate(2.5deg);
+        }
+        .labnote:hover {
+            transform: rotate(0deg) scale(1.10);
+            box-shadow: 0 18px 36px rgba(18, 22, 28, 0.28);
+            z-index: 5;
+            position: relative;
+        }
+        .labnote img {
+            width: 100%;
+            height: 175px;
+            object-fit: contain;
+            object-position: top;
+            border-radius: 3px;
+            display: block;
+            background: #fff;
+        }
+        .labnote figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            text-align: center;
+            padding-top: 7px;
+            letter-spacing: 0.03em;
+        }
+
+        /* ---------- Gauges ---------- */
+        .gauge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin: 18px 0 6px;
+            align-items: flex-start;
+        }
+        .gauge {
+            width: 100px;
+            text-align: center;
+        }
+        .gauge svg {
+            display: block;
+            margin: 0 auto;
+        }
+        .gauge-ring-bg {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 8;
+        }
+        .gauge-ring-fg {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 251.33;
+            stroke-dashoffset: 251.33;
+            transition: stroke-dashoffset 1.4s var(--transition-bounce);
+        }
+        .gauge-val {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1rem;
+            fill: var(--ink);
+        }
+        .gauge-lbl {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: var(--muted);
+            margin-top: 7px;
+            letter-spacing: 0.03em;
+            line-height: 1.4;
+        }
+
+        /* ---------- Cursor glow (subtle) ---------- */
+        #cursor-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(122, 138, 240, 0.10) 0%, rgba(122, 138, 240, 0.03) 35%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            will-change: left, top;
+        }
+        @media (max-width: 820px) {
+            #cursor-glow {
+                display: none;
+            }
+        }
+        @media (hover: none) {
+            #cursor-glow {
+                display: none;
+            }
+        }
+
+        /* Section divider - subtle diffraction-line */
+        .section-divider {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-divider::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+            margin: 8px 0;
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        /* Pulse dot on active nav */
+        .nav-links a.active-link {
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+        .nav-links a.active-link::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Subtle caustic background orbs -->
+    <div class="caustic-orb" aria-hidden="true"></div>
+    <div class="caustic-orb" aria-hidden="true"></div>
+    <div class="caustic-orb" aria-hidden="true"></div>
+
+    <!-- Cursor glow element -->
+    <div id="cursor-glow" aria-hidden="true"></div>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a class="nav-name" href="#top">Sharan Kandasamy</a>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#publications">Publications</a>
+                <a href="#skills">Skills</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="top">
+        <div class="hero-fade">
+            <span class="eyebrow">Optical &amp; Photonics Engineer · M.Sc. Scientific Instrumentation</span>
+            <h1>Building optical test systems <span class="thin">from bench to pipeline.</span></h1>
+            <p class="hero-sub">
+                I design and build optical instrumentation: image sensor characterization systems,
+                OCT signal chains, and precision opto-mechanics, combining hands-on optical assembly
+                with Python-based measurement and analysis pipelines.
+            </p>
+            <div class="hero-meta">
+                <span>Bremen, Germany</span>
+                <span>EAH Jena · Scientific Instrumentation</span>
+                <span>Open to roles in DACH / Europe</span>
+            </div>
+            <div class="hero-signature" aria-hidden="true">
+                <svg width="230" height="54" viewBox="0 0 230 54">
+                    <line x1="4" y1="46" x2="226" y2="46" stroke="#D9DDE4" stroke-width="1"/>
+                    <line x1="4" y1="4" x2="4" y2="46" stroke="#D9DDE4" stroke-width="1"/>
+                    <path d="M6 44 C 40 40, 70 30, 100 20 S 160 8, 224 6" fill="none" stroke="#7A8AF0" stroke-width="1.5" stroke-dasharray="2 3"/>
+                    <circle r="3.5" fill="#3D4EC9">
+                        <animateMotion dur="6s" repeatCount="indefinite" path="M6 44 C 40 40, 70 30, 100 20 S 160 8, 224 6"/>
+                    </circle>
+                </svg>
+                <div class="hero-sig-cap">photon transfer curve · EMVA 1288</div>
+            </div>
+        </div>
+        <div class="portrait hero-fade">
+            <img src="coat_image.png" alt="Portrait of Sharan Kandasamy" onerror="this.style.display='none'">
+            <div class="ph">PHOTO<br>(place coat_image.png<br>next to this file)</div>
+        </div>
+    </header>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="projects">
+        <div class="section-head reveal">
+            <span class="idx">01 / Projects</span>
+            <h2>Work along the optical rail</h2>
+            <p>Selected projects across industrial R&amp;D, applied research, and published engineering work.
+                Industry projects are described at the methodology level in accordance with confidentiality agreements.</p>
+        </div>
+
+        <div class="rail">
+
+            <!-- Thesis -->
+            <article class="mount reveal">
+                <span class="pos">2025 – 2026</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">Master's Thesis</span>
+                        <span class="tag ctx">ficonTEC Service GmbH · Achim</span>
+                        <span class="tag ctx">EMVA 1288 · Machine Vision</span>
+                    </div>
+                    <h3>Dual-Illumination System for Image Sensor Characterization and Defect Detection</h3>
+                    <div class="org">Supervised by Prof. Dr. Robert Brunner (EAH Jena) and Dr.-Ing. Mahmoud Essameldin (ficonTEC)</div>
+
+                    <span class="lbl">Problem</span>
+                    <p>EMVA 1288 sensor characterization traditionally relies on integrating spheres or long
+                        collimated free-space setups to achieve homogeneous flat-field illumination at the specified
+                        f-number. Contamination and defect inspection normally requires separate instruments,
+                        making combined evaluation slow and impractical in production settings.</p>
+
+                    <span class="lbl">Approach</span>
+                    <p>Designed and built a compact dual-illumination optical test bench: a dome-based broadband
+                        channel for uniform flat-field illumination (standardized characterization and pixel defect
+                        mapping) and a co-aligned telecentric channel for high-contrast detection of surface particles
+                        and defects. Both modes share a common optical axis with electronically adjustable intensity,
+                        so the sensor never needs repositioning. Custom 3D-printed opto-mechanical housings, multi-axis
+                        alignment with tilt control, active thermal management under the sensor, and integration into
+                        an industrial production control platform.</p>
+
+                    <div class="fig">
+                        <svg viewBox="0 0 640 240" role="img" aria-label="Schematic of the dual-illumination test bench concept">
+                            <rect x="20" y="80" width="110" height="44" class="svg-box"/>
+                            <text x="75" y="99" text-anchor="middle" class="svg-lbl">Telecentric</text>
+                            <text x="75" y="113" text-anchor="middle" class="svg-lbl">illuminator</text>
+                            <line x1="130" y1="92" x2="330" y2="92" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="130" y1="102" x2="330" y2="102" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="130" y1="112" x2="330" y2="112" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="315" y1="70" x2="365" y2="130" stroke="#12161C" stroke-width="4"/>
+                            <text x="392" y="72" text-anchor="middle" class="svg-lbl">45° mirror</text>
+                            <line x1="330" y1="100" x2="330" y2="185" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="340" y1="108" x2="340" y2="185" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="350" y1="118" x2="350" y2="185" stroke="#3D4EC9" stroke-width="2"/>
+                            <path d="M 220 190 A 120 120 0 0 1 460 190" fill="none" stroke="#7A8AF0" stroke-width="5"/>
+                            <text x="480" y="120" class="svg-lbl-a">LED dome</text>
+                            <text x="480" y="134" class="svg-lbl-a">(uniform field)</text>
+                            <line x1="318" y1="70" x2="362" y2="70" stroke="#FBFCFE" stroke-width="8"/>
+                            <rect x="295" y="188" width="90" height="14" fill="#12161C" rx="2"/>
+                            <text x="340" y="222" text-anchor="middle" class="svg-lbl">image sensor (bare die, cooled mount)</text>
+                            <rect x="255" y="204" width="170" height="8" fill="#D9DDE4" rx="2"/>
+                            <text x="120" y="180" class="svg-lbl">multi-axis alignment</text>
+                            <text x="120" y="194" class="svg-lbl">+ tilt control</text>
+                            <line x1="212" y1="188" x2="250" y2="200" stroke="#5A6472" stroke-width="1" marker-end="none"/>
+                        </svg>
+                        <div class="cap">Fig. 1 · Concept schematic (original drawing): co-aligned dome and telecentric illumination sharing one optical axis, switchable without repositioning the sensor</div>
+                    </div>
+
+                    <div class="fig">
+                        <svg viewBox="0 0 660 150" role="img" aria-label="EMVA 1288 processing pipeline">
+                            <rect x="10" y="20" width="100" height="52" class="svg-box"/>
+                            <text x="60" y="42" text-anchor="middle" class="svg-lbl">Dark / flat-field</text>
+                            <text x="60" y="56" text-anchor="middle" class="svg-lbl">acquisition</text>
+                            <line x1="110" y1="46" x2="138" y2="46" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="140" y="20" width="100" height="52" class="svg-box"/>
+                            <text x="190" y="42" text-anchor="middle" class="svg-lbl">Photon transfer</text>
+                            <text x="190" y="56" text-anchor="middle" class="svg-lbl">curve fit</text>
+                            <line x1="240" y1="46" x2="268" y2="46" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="270" y="20" width="100" height="52" class="svg-box"/>
+                            <text x="320" y="38" text-anchor="middle" class="svg-lbl">Gain · QE · SNR</text>
+                            <text x="320" y="52" text-anchor="middle" class="svg-lbl">dyn. range</text>
+                            <text x="320" y="66" text-anchor="middle" class="svg-lbl">linearity</text>
+                            <line x1="370" y1="46" x2="398" y2="46" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="400" y="20" width="100" height="52" class="svg-box"/>
+                            <text x="450" y="42" text-anchor="middle" class="svg-lbl">DSNU / PRNU</text>
+                            <text x="450" y="56" text-anchor="middle" class="svg-lbl">decomposition</text>
+                            <line x1="500" y1="46" x2="528" y2="46" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="530" y="20" width="118" height="52" class="svg-box-a"/>
+                            <text x="589" y="38" text-anchor="middle" class="svg-lbl-a">Defect &amp; particle</text>
+                            <text x="589" y="52" text-anchor="middle" class="svg-lbl-a">maps</text>
+                            <text x="589" y="66" text-anchor="middle" class="svg-lbl-a">(MAD · Z-score)</text>
+                            <text x="330" y="110" text-anchor="middle" class="svg-lbl">Python · NumPy vectorized · traceable to EMVA 1288 Release 4.0 · automated plot generation</text>
+                        </svg>
+                        <div class="cap">Fig. 2 · Evaluation pipeline from raw frames to standardized metrics and defect maps</div>
+                    </div>
+
+                    <div class="imgrow tri">
+                        <figure><img src="thesis-ptc.png" alt="Illustrative EMVA 1288 photon transfer curve" loading="lazy"><figcaption>Photon transfer curve: shot-noise fit, read-noise floor, saturation (illustrative)</figcaption></figure>
+                        <figure><img src="thesis-defects.png" alt="Illustrative defective pixel and particle detection result" loading="lazy"><figcaption>Hot/dead pixels and surface particles flagged by MAD + Z-score (illustrative)</figcaption></figure>
+                        <figure><img src="thesis-pixels.png" alt="Illustrative pixel-level view of defective pixels" loading="lazy"><figcaption>Pixel-level view: outliers vs. neighbourhood statistics (illustrative)</figcaption></figure>
+                    </div>
+                    <div class="imgrow">
+                        <figure style="grid-column:1/-1"><img src="thesis-fpn.png" alt="Illustrative DSNU and PRNU fixed-pattern noise maps" loading="lazy" style="height:240px"><figcaption>Fixed-pattern noise decomposition: DSNU (dark) and PRNU (flat-field) maps per EMVA 1288 (illustrative)</figcaption></figure>
+                    </div>
+
+                    <div class="photo-slot">
+                        <img src="thesis-setup.jpg" alt="Photo of the dual-illumination test bench" onerror="this.remove()">
+                        <div class="hint">PHOTO SLOT · add img/thesis-setup.jpg once cleared by ficonTEC</div>
+                    </div>
+
+                    <span class="lbl">What I built</span>
+                    <p>A Python-based EMVA 1288 evaluation pipeline covering photon transfer analysis, system gain,
+                        quantum efficiency, temporal noise, SNR, dynamic range, linearity, and DSNU/PRNU decomposition,
+                        plus robust-statistics defect detection (MAD and Z-score methods) for hot/dead pixels and
+                        micron-scale surface particles. Fully automated acquisition, processing, and standardized
+                        plot generation traceable to the EMVA 1288 Release 4.0 framework.</p>
+
+                    <span class="lbl">Outcome</span>
+                    <p>A working prototype that combines standards-compliant characterization and sensitive surface
+                        inspection in a single integrated workflow, something conventional integrating-sphere benches
+                        cannot do without separate instruments and procedures.</p>
+
+                    <div class="nda">Thesis content is subject to a non-disclosure agreement with ficonTEC Service GmbH.
+                        Descriptions here stay at the methodology level; proprietary designs, data, and performance figures are omitted.</div>
+                </div>
+            </article>
+
+            <!-- ficonTEC internship -->
+            <article class="mount reveal">
+                <span class="pos">2025</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">R&amp;D Internship</span>
+                        <span class="tag ctx">ficonTEC Service GmbH · Achim</span>
+                        <span class="tag ctx">Active Alignment · Camera Modules</span>
+                    </div>
+                    <h3>Active Alignment Concepts for Camera Modules</h3>
+                    <div class="org">January – May 2025</div>
+                    <p>Investigated active alignment strategies for camera module assembly: diffractive optical
+                        elements, pattern-based alignment approaches, and the mathematical models linking measured
+                        image quality to alignment corrections. Built and tested opto-mechanical setups hands-on
+                        and worked directly on ficonTEC's production control platform, bridging alignment theory
+                        and machine-level implementation.</p>
+                    <div class="fig">
+                        <svg viewBox="0 0 640 190" role="img" aria-label="Active alignment concept loop">
+                            <rect x="30" y="20" width="120" height="40" class="svg-box"/>
+                            <text x="90" y="37" text-anchor="middle" class="svg-lbl">Test pattern /</text>
+                            <text x="90" y="51" text-anchor="middle" class="svg-lbl">diffractive target</text>
+                            <line x1="90" y1="60" x2="90" y2="88" stroke="#3D4EC9" stroke-width="2"/>
+                            <ellipse cx="90" cy="98" rx="34" ry="10" fill="#E8EAFB" stroke="#3D4EC9" stroke-width="1.5"/>
+                            <text x="140" y="102" class="svg-lbl">lens module</text>
+                            <line x1="90" y1="108" x2="90" y2="132" stroke="#3D4EC9" stroke-width="2"/>
+                            <rect x="52" y="134" width="76" height="12" fill="#12161C" rx="2"/>
+                            <text x="90" y="168" text-anchor="middle" class="svg-lbl">image sensor</text>
+                            <line x1="130" y1="140" x2="228" y2="140" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="230" y="112" width="130" height="52" class="svg-box"/>
+                            <text x="295" y="132" text-anchor="middle" class="svg-lbl">Image-quality</text>
+                            <text x="295" y="146" text-anchor="middle" class="svg-lbl">metrics per field</text>
+                            <line x1="360" y1="138" x2="428" y2="138" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="430" y="112" width="130" height="52" class="svg-box-a"/>
+                            <text x="495" y="132" text-anchor="middle" class="svg-lbl-a">Alignment model</text>
+                            <text x="495" y="146" text-anchor="middle" class="svg-lbl-a">(math. correction)</text>
+                            <path d="M 495 110 L 495 50 L 200 50" fill="none" stroke="#3D4EC9" stroke-width="1.5" stroke-dasharray="5 4"/>
+                            <path d="M 205 45 L 195 50 L 205 55 Z" fill="#3D4EC9"/>
+                            <text x="350" y="42" text-anchor="middle" class="svg-lbl-a">multi-axis correction (x·y·z·θ) → re-measure</text>
+                        </svg>
+                        <div class="cap">Fig. 5 · Active alignment loop concept: measure image quality, compute correction, actuate, repeat</div>
+                    </div>
+                    <div class="nda">Internal R&amp;D project; described at the concept level without proprietary implementation details.</div>
+                </div>
+            </article>
+
+            <!-- Zeiss -->
+            <article class="mount reveal">
+                <span class="pos">2024</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">R&amp;D Internship</span>
+                        <span class="tag ctx">Carl Zeiss AG · Innovation Hub @ KIT, Karlsruhe</span>
+                        <span class="tag ctx">SS-OCT · Ophthalmology</span>
+                    </div>
+                    <h3>Four-Dimensional Microscope-Integrated Swept-Source OCT</h3>
+                    <div class="org">February – July 2024 · Corporate Research &amp; Technology · Supervised by Dr. Philipp Matten</div>
+
+                    <span class="lbl">Context</span>
+                    <p>Contributed to the development of a research-grade, microscope-integrated swept-source OCT
+                        system for live volumetric (4D) ophthalmic imaging, designed for interfaceability that
+                        certified medical devices cannot offer.</p>
+
+                    <span class="lbl">Hardware</span>
+                    <p>Assembled and aligned interferometer optics, laser sources, and fiber components, and
+                        integrated detection electronics into the prototype signal path, including DAQ-based
+                        acquisition of interference signals.</p>
+
+                    <div class="fig">
+                        <svg viewBox="0 0 640 200" role="img" aria-label="Swept-source OCT interferometer schematic">
+                            <rect x="15" y="70" width="105" height="46" class="svg-box"/>
+                            <text x="67" y="90" text-anchor="middle" class="svg-lbl">Swept-source</text>
+                            <text x="67" y="104" text-anchor="middle" class="svg-lbl">laser + k-clock</text>
+                            <line x1="120" y1="93" x2="215" y2="93" stroke="#3D4EC9" stroke-width="2"/>
+                            <circle cx="240" cy="93" r="24" fill="#E8EAFB" stroke="#3D4EC9" stroke-width="1.5"/>
+                            <text x="240" y="97" text-anchor="middle" class="svg-lbl-a">coupler</text>
+                            <line x1="240" y1="69" x2="240" y2="30" stroke="#3D4EC9" stroke-width="2"/>
+                            <line x1="220" y1="28" x2="260" y2="28" stroke="#12161C" stroke-width="4"/>
+                            <text x="278" y="32" class="svg-lbl">reference mirror</text>
+                            <line x1="264" y1="93" x2="360" y2="93" stroke="#3D4EC9" stroke-width="2"/>
+                            <rect x="362" y="70" width="110" height="46" class="svg-box"/>
+                            <text x="417" y="90" text-anchor="middle" class="svg-lbl">microscope +</text>
+                            <text x="417" y="104" text-anchor="middle" class="svg-lbl">scanner → eye</text>
+                            <line x1="240" y1="117" x2="240" y2="150" stroke="#3D4EC9" stroke-width="2"/>
+                            <rect x="180" y="152" width="120" height="40" class="svg-box"/>
+                            <text x="240" y="169" text-anchor="middle" class="svg-lbl">balanced detector</text>
+                            <text x="240" y="183" text-anchor="middle" class="svg-lbl">→ DAQ</text>
+                            <line x1="300" y1="172" x2="360" y2="172" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="362" y="152" width="120" height="40" class="svg-box-a"/>
+                            <text x="422" y="169" text-anchor="middle" class="svg-lbl-a">reconstruction</text>
+                            <text x="422" y="183" text-anchor="middle" class="svg-lbl-a">pipeline (below)</text>
+                            <text x="540" y="100" class="svg-lbl">fiber-based</text>
+                            <text x="540" y="114" class="svg-lbl">interferometer</text>
+                        </svg>
+                        <div class="cap">Fig. 3 · SS-OCT system concept (original drawing): fiber interferometer with k-clock referenced acquisition</div>
+                    </div>
+
+                    <div class="fig">
+                        <svg viewBox="0 0 660 120" role="img" aria-label="OCT signal processing chain">
+                            <rect x="8" y="30" width="92" height="46" class="svg-box"/>
+                            <text x="54" y="49" text-anchor="middle" class="svg-lbl">Background</text>
+                            <text x="54" y="63" text-anchor="middle" class="svg-lbl">subtraction</text>
+                            <line x1="100" y1="53" x2="116" y2="53" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="118" y="30" width="92" height="46" class="svg-box"/>
+                            <text x="164" y="49" text-anchor="middle" class="svg-lbl">k-space</text>
+                            <text x="164" y="63" text-anchor="middle" class="svg-lbl">resampling</text>
+                            <line x1="210" y1="53" x2="226" y2="53" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="228" y="30" width="92" height="46" class="svg-box"/>
+                            <text x="274" y="56" text-anchor="middle" class="svg-lbl">Windowing</text>
+                            <line x1="320" y1="53" x2="336" y2="53" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="338" y="30" width="102" height="46" class="svg-box-a"/>
+                            <text x="389" y="49" text-anchor="middle" class="svg-lbl-a">Dispersion</text>
+                            <text x="389" y="63" text-anchor="middle" class="svg-lbl-a">compensation</text>
+                            <line x1="440" y1="53" x2="456" y2="53" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="458" y="30" width="70" height="46" class="svg-box"/>
+                            <text x="493" y="56" text-anchor="middle" class="svg-lbl">FFT</text>
+                            <line x1="528" y1="53" x2="544" y2="53" stroke="#5A6472" stroke-width="1.5"/>
+                            <rect x="546" y="30" width="104" height="46" class="svg-box"/>
+                            <text x="598" y="49" text-anchor="middle" class="svg-lbl">A / B / C-scan</text>
+                            <text x="598" y="63" text-anchor="middle" class="svg-lbl">visualization</text>
+                            <text x="330" y="104" text-anchor="middle" class="svg-lbl">dispersion phase e^(i(C₂φ² + C₃φ³)) · coefficients optimized by coarse-to-fine search on PSF width</text>
+                        </svg>
+                        <div class="cap">Fig. 4 · Reconstruction chain I implemented, from raw interference signal to volumetric scans</div>
+                    </div>
+
+                    <div class="imgrow">
+                        <figure><img src="oct-bscan.png" alt="Illustrative swept-source OCT retinal B-scan showing retinal layers and the foveal pit" loading="lazy"><figcaption>SS-OCT retinal B-scan: layered retina with foveal pit, the kind of image the reconstruction chain produces (illustrative)</figcaption></figure>
+                        <figure><img src="oct-ascan.png" alt="Illustrative spectral interferogram and reconstructed A-scan" loading="lazy"><figcaption>From spectral fringes to depth profile: interferogram after k-space resampling, and the FFT-reconstructed A-scan (illustrative)</figcaption></figure>
+                    </div>
+
+                    <span class="lbl">Signal processing</span>
+                    <p>Implemented the full OCT reconstruction chain in software: background subtraction, k-space
+                        resampling against the k-clock signal, spectral windowing, numerical dispersion compensation,
+                        and FFT-based depth reconstruction through to A-, B-, and C-scan visualization. Optimized
+                        dispersion compensation via iterative coarse-to-fine search over polynomial phase coefficients,
+                        evaluated by point spread function width.</p>
+                </div>
+            </article>
+
+            <!-- Humidifier -->
+            <article class="mount reveal">
+                <span class="pos">2021 – 2022</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">Published · ICCET 2022</span>
+                        <span class="tag ctx">Kongu Engineering College</span>
+                        <span class="tag ctx">1st Place · IDEATHON-2021</span>
+                    </div>
+                    <h3>Linear Motion Humidifier for Mushroom Cultivation</h3>
+                    <div class="org">Awarded a startup development grant</div>
+                    <p>Mushroom cultivation demands 80–95% relative humidity, but conventional water spraying causes
+                        stagnation and fungal disease, usually countered with pesticides that degrade the crop. We designed
+                        a low-cost ultrasonic humidifier that traverses linearly along the growing racks: a lead screw and
+                        12V gear motor convert rotary to linear motion, distributing fine mist (droplets around 32 µm)
+                        uniformly across all mushroom bags. Modeled in SolidWorks, built as a working prototype with a
+                        relay-based drive circuit, and validated by psychrometric analysis reaching the target 85% RH.
+                        The design eliminates chemical treatment while cutting labor and cost.</p>
+                    <div class="fig">
+                        <svg viewBox="0 0 640 170" role="img" aria-label="Linear motion humidifier mechanism">
+                            <rect x="20" y="40" width="120" height="80" class="svg-box"/>
+                            <text x="80" y="70" text-anchor="middle" class="svg-lbl">Ultrasonic tank</text>
+                            <text x="80" y="84" text-anchor="middle" class="svg-lbl">+ blower fan</text>
+                            <text x="80" y="98" text-anchor="middle" class="svg-lbl">(~32 µm mist)</text>
+                            <path d="M 140 70 C 190 70 200 55 250 55" fill="none" stroke="#7A8AF0" stroke-width="6"/>
+                            <text x="195" y="42" text-anchor="middle" class="svg-lbl">flex pipe</text>
+                            <line x1="250" y1="55" x2="560" y2="55" stroke="#12161C" stroke-width="3"/>
+                            <g stroke="#12161C" stroke-width="1">
+                                <line x1="260" y1="49" x2="260" y2="61"/><line x1="280" y1="49" x2="280" y2="61"/>
+                                <line x1="300" y1="49" x2="300" y2="61"/><line x1="320" y1="49" x2="320" y2="61"/>
+                                <line x1="340" y1="49" x2="340" y2="61"/><line x1="360" y1="49" x2="360" y2="61"/>
+                                <line x1="380" y1="49" x2="380" y2="61"/><line x1="400" y1="49" x2="400" y2="61"/>
+                                <line x1="420" y1="49" x2="420" y2="61"/><line x1="440" y1="49" x2="440" y2="61"/>
+                                <line x1="460" y1="49" x2="460" y2="61"/><line x1="480" y1="49" x2="480" y2="61"/>
+                                <line x1="500" y1="49" x2="500" y2="61"/><line x1="520" y1="49" x2="520" y2="61"/>
+                            </g>
+                            <text x="405" y="32" text-anchor="middle" class="svg-lbl">lead screw · 12V gear motor · relay reversal</text>
+                            <rect x="330" y="46" width="30" height="18" class="svg-box-a"/>
+                            <line x1="345" y1="64" x2="345" y2="92" stroke="#3D4EC9" stroke-width="4"/>
+                            <g fill="#7A8AF0" opacity=".7">
+                                <circle cx="335" cy="102" r="3"/><circle cx="345" cy="108" r="3"/><circle cx="355" cy="102" r="3"/>
+                                <circle cx="330" cy="114" r="2.5"/><circle cx="350" cy="118" r="2.5"/><circle cx="360" cy="112" r="2.5"/>
+                            </g>
+                            <path d="M 300 60 L 285 60 M 390 60 L 405 60" stroke="#3D4EC9" stroke-width="1.5"/>
+                            <text x="470" y="100" class="svg-lbl-a">traversing outlet ⇄</text>
+                            <g class="svg-lbl">
+                                <rect x="240" y="128" width="44" height="26" rx="6" fill="#fff" stroke="#D9DDE4" stroke-width="1.5"/>
+                                <rect x="300" y="128" width="44" height="26" rx="6" fill="#fff" stroke="#D9DDE4" stroke-width="1.5"/>
+                                <rect x="360" y="128" width="44" height="26" rx="6" fill="#fff" stroke="#D9DDE4" stroke-width="1.5"/>
+                                <rect x="420" y="128" width="44" height="26" rx="6" fill="#fff" stroke="#D9DDE4" stroke-width="1.5"/>
+                            </g>
+                            <text x="352" y="167" text-anchor="middle" class="svg-lbl">mushroom bags · uniform 80–95% RH</text>
+                        </svg>
+                        <div class="cap">Fig. 6 · Mechanism: lead screw converts rotary to linear motion, sweeping mist uniformly along the rack</div>
+                    </div>
+                    <div class="imgrow">
+                        <figure>
+                            <img src="humidifier-model.jpg" alt="Isometric SolidWorks model of the linear motion humidifier" loading="lazy">
+                            <figcaption>SolidWorks model of the humidifier with lead screw traversal (from our ICCET 2022 paper)</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="humidifier-circuit.png" alt="Relay drive circuit diagram of the humidifier" loading="lazy">
+                            <figcaption>Relay-based drive circuit for forward/reverse motor traversal</figcaption>
+                        </figure>
+                    </div>
+                    <div class="gauge-row">
+                        <div class="gauge">
+                            <svg width="98" height="98" viewBox="0 0 98 98">
+                                <circle class="gauge-ring-bg" cx="49" cy="49" r="40"/>
+                                <circle class="gauge-ring-fg" cx="49" cy="49" r="40" transform="rotate(-90 49 49)" data-pct="85"/>
+                                <text x="49" y="54" text-anchor="middle" class="gauge-val">85%</text>
+                            </svg>
+                            <div class="gauge-lbl">Relative humidity<br>achieved (target 80–95%)</div>
+                        </div>
+                        <div class="stats" style="margin:0;align-self:center">
+                            <div class="stat"><b>~32 µm</b><span>mean droplet size</span></div>
+                            <div class="stat"><b>350 mL/h</b><span>max evaporation rate</span></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- FSW -->
+            <article class="mount reveal">
+                <span class="pos">2021</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">Published · Materials Today: Proceedings</span>
+                        <span class="tag ctx">Kongu Engineering College</span>
+                        <span class="tag ctx">Materials Testing</span>
+                    </div>
+                    <h3>Flexural and Crashworthiness Studies of Friction Stir Welded Aluminum Alloy Pipes</h3>
+                    <div class="org">Friction stir welding of AA 6063 pipe geometry</div>
+                    <p>Friction stir welding of pipes is far less established than welding of flat plates. We welded
+                        AA 6063 pipes using a custom mandrel-based fixture mounted on a conventional vertical milling
+                        machine, then evaluated the joints under quasi-static axial crushing (ASTM D3410) and three-point
+                        flexural loading (ASTM D790). The study quantified crash force efficiency and flexural strength
+                        of the welded joints and identified tool pin diameter as the limiting factor for weld integrity
+                        under bending, contributing to the sparse literature on FSW of pipe geometries.</p>
+                    <div class="fig">
+                        <svg viewBox="0 0 640 180" role="img" aria-label="Friction stir welding of pipe and test methods">
+                            <rect x="120" y="18" width="36" height="40" fill="#12161C" rx="3"/>
+                            <polygon points="130,58 146,58 138,74" fill="#12161C"/>
+                            <text x="180" y="34" class="svg-lbl">rotating tool · 2000 rpm</text>
+                            <text x="180" y="48" class="svg-lbl">taper cylindrical pin</text>
+                            <path d="M 108 28 A 30 30 0 0 1 118 12" fill="none" stroke="#3D4EC9" stroke-width="2"/>
+                            <path d="M 116 10 L 122 14 L 114 18 Z" fill="#3D4EC9"/>
+                            <ellipse cx="60" cy="105" rx="16" ry="30" fill="#fff" stroke="#12161C" stroke-width="2.5"/>
+                            <line x1="60" y1="75" x2="220" y2="75" stroke="#12161C" stroke-width="2.5"/>
+                            <line x1="60" y1="135" x2="220" y2="135" stroke="#12161C" stroke-width="2.5"/>
+                            <ellipse cx="220" cy="105" rx="16" ry="30" fill="#fff" stroke="#12161C" stroke-width="2.5"/>
+                            <line x1="138" y1="76" x2="138" y2="134" stroke="#3D4EC9" stroke-width="3" stroke-dasharray="4 3"/>
+                            <text x="140" y="160" text-anchor="middle" class="svg-lbl-a">weld seam · pipe rotated slowly on mandrel</text>
+                            <text x="140" y="174" text-anchor="middle" class="svg-lbl">AA 6063 · Ø50 mm · t = 3 mm · vertical milling machine</text>
+                            <rect x="360" y="30" width="260" height="56" class="svg-box"/>
+                            <text x="490" y="52" text-anchor="middle" class="svg-lbl">Crashworthiness · quasi-static axial crush</text>
+                            <text x="490" y="68" text-anchor="middle" class="svg-lbl">(ASTM D3410) → crash force efficiency</text>
+                            <rect x="360" y="100" width="260" height="56" class="svg-box"/>
+                            <text x="490" y="122" text-anchor="middle" class="svg-lbl">Flexural · three-point bending on weldment</text>
+                            <text x="490" y="138" text-anchor="middle" class="svg-lbl">(ASTM D790) → flexural strength</text>
+                        </svg>
+                        <div class="cap">Fig. 7 · Custom fixture concept and the two test programs applied to the welded joints</div>
+                    </div>
+                    <div class="imgrow tri">
+                        <figure>
+                            <img src="fsw-setup.jpg" alt="Friction stir welding setup on the vertical milling machine" loading="lazy">
+                            <figcaption>Welding setup: FSW tool in the milling machine with mandrel-held pipe (from our paper)</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="fsw-samples.jpg" alt="Friction stir welded AA 6063 pipe samples" loading="lazy">
+                            <figcaption>Welded AA 6063 pipe samples</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="fsw-crash-test.jpg" alt="Quasi-static axial crush test of the welded pipe" loading="lazy">
+                            <figcaption>Quasi-static axial crush test of the welded joint</figcaption>
+                        </figure>
+                    </div>
+                    <div class="imgrow tri">
+                        <figure>
+                            <img src="fsw-flex-test.jpg" alt="Three-point flexural test of the welded pipe on the universal testing machine" loading="lazy">
+                            <figcaption>Three-point flexural test on the 1000 kN UTM</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="fsw-crash-plot.jpg" alt="Load versus elongation plot from the crashworthiness test" loading="lazy">
+                            <figcaption>Crush test: load vs. elongation (F<sub>max</sub> 64.43 kN)</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="fsw-flex-plot.jpg" alt="Load versus elongation plot from the flexural test" loading="lazy">
+                            <figcaption>Flexural test: failure at the weld plane (7.35 kN)</figcaption>
+                        </figure>
+                    </div>
+                    <div class="gauge-row">
+                        <div class="gauge">
+                            <svg width="98" height="98" viewBox="0 0 98 98">
+                                <circle class="gauge-ring-bg" cx="49" cy="49" r="40"/>
+                                <circle class="gauge-ring-fg" cx="49" cy="49" r="40" transform="rotate(-90 49 49)" data-pct="49.7"/>
+                                <text x="49" y="54" text-anchor="middle" class="gauge-val">49.7%</text>
+                            </svg>
+                            <div class="gauge-lbl">Crash force<br>efficiency</div>
+                        </div>
+                        <div class="stats" style="margin:0;align-self:center">
+                            <div class="stat"><b>7.35 kN</b><span>max flexural load</span></div>
+                            <div class="stat"><b>21 mm</b><span>deflection at failure</span></div>
+                            <div class="stat"><b>2000 rpm</b><span>tool rotation</span></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- E-bike -->
+            <article class="mount reveal">
+                <span class="pos">2019 – 2020</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">Competition · SAEISS ETWDC 2020</span>
+                        <span class="tag ctx">Team ENVISION · Kongu Engineering College</span>
+                    </div>
+                    <h3>Electric Bike Design</h3>
+                    <div class="org">SAEISS Electric Two-Wheeler Design Competition</div>
+                    <p>Team project covering the full design cycle of an electric two-wheeler: frame design and CAE
+                        analysis, BLDC motor and battery selection, and vehicle integration, developed and presented
+                        for the national SAEISS competition.</p>
+                    <div class="imgrow">
+                        <figure>
+                            <img src="ebike-cad.png" alt="3D CAD view of the ENVISION electric bike" loading="lazy">
+                            <figcaption>3D CAD model of the ENVISION e-bike (Fusion 360)</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="ebike-built.png" alt="The built ENVISION electric bike prototype" loading="lazy">
+                            <figcaption>The fabricated prototype</figcaption>
+                        </figure>
+                    </div>
+                    <div class="imgrow">
+                        <figure>
+                            <img src="ebike-cae.png" alt="CAE stress analysis of the e-bike frame" loading="lazy">
+                            <figcaption>CAE analysis of the frame</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="ebike-rider.png" alt="Rider triangle ergonomics design of the e-bike" loading="lazy">
+                            <figcaption>Rider triangle designed for a relaxed cruiser position</figcaption>
+                        </figure>
+                    </div>
+                    <div class="stats">
+                        <div class="stat"><b>1000 W</b><span>BLDC hub motor</span></div>
+                        <div class="stat"><b>48V 25Ah</b><span>battery</span></div>
+                        <div class="stat"><b>60 km</b><span>range</span></div>
+                        <div class="stat"><b>50 kg</b><span>overall weight</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Copra -->
+            <article class="mount reveal">
+                <span class="pos">2022</span>
+                <div class="card">
+                    <div class="tags">
+                        <span class="tag">Bachelor's Project</span>
+                        <span class="tag ctx">Kongu Engineering College</span>
+                        <span class="tag ctx">DOE · Ergonomics</span>
+                    </div>
+                    <h3>Ergonomic Assessment of Body Muscular Stiffness in Copra Extraction</h3>
+                    <p>Applied design-of-experiments and response surface methodology to assess muscular stiffness
+                        in manual copra extraction work, informing the ergonomic design of an improved extraction tool.</p>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Coursework group -->
+        <div class="section-head reveal" style="margin-top:72px">
+            <span class="idx">01.b / Also hands-on with</span>
+            <h2 style="font-size:1.55rem">Graduate optics laboratory work</h2>
+            <p>Selected laboratory projects from the M.Sc. Scientific Instrumentation program at EAH Jena.</p>
+        </div>
+        <div class="mini-grid">
+            <div class="mini reveal" style="grid-column:1/-1">
+                <h4>Ray Tracing for Optical Analysis of Solid Models</h4>
+                <div class="org">Optical Instruments Laboratory</div>
+                <p>Monte Carlo ray tracing of solid optical models in TracePro across three exercises: an f/4 imaging lens, a bent fiber-optic light-pipe, and polarized reflection off a titanium surface.</p>
+
+                <div class="ex-block">
+                    <div class="ex-title">Exercise 1 · f/4 biconvex lens, f = 100 mm</div>
+                    <p class="ex-desc">Symmetrical biconvex lens (R = ±100 mm, semi-diameter 12.5 mm) with a grid source and a perfect-absorber detector; irradiance evaluated at 100 mm and 200 mm.</p>
+                    <div class="imgrow tri">
+                        <figure><img src="rt-ex1-design.jpg" alt="TracePro lens element definition for the f/4 lens" loading="lazy"><figcaption>Lens design: surface radii of curvature input</figcaption></figure>
+                        <figure><img src="rt-ex1-trace.jpg" alt="Ray trace of the f/4 lens with detector at focal plane" loading="lazy"><figcaption>Ray trace with detector at 100 mm</figcaption></figure>
+                        <figure><img src="rt-ex1-irr.jpg" alt="Irradiance map at the detector" loading="lazy"><figcaption>Irradiance map at the focal plane</figcaption></figure>
+                    </div>
+                </div>
+
+                <div class="ex-block">
+                    <div class="ex-title">Exercise 2 · Fiber-optic light-pipe, straight &amp; 90° bend</div>
+                    <p class="ex-desc">Core Ø1.5 mm × 150 mm with 0.3 mm N-BK7 cladding. Straight B270 core captured 92.89% of incident energy; after the 90° bend, N-BAK4 (95.9%) outperformed B270 (85%) as core material.</p>
+                    <div class="imgrow tri">
+                        <figure><img src="rt-ex2-design.jpg" alt="Grid source definition for the light-pipe model" loading="lazy"><figcaption>Light-pipe design: grid source input</figcaption></figure>
+                        <figure><img src="rt-ex2-trace.jpg" alt="Ray trace of the straight fiber optic" loading="lazy"><figcaption>Guided rays in the straight pipe</figcaption></figure>
+                        <figure><img src="rt-ex2-irr.jpg" alt="Irradiance map at the fiber end" loading="lazy"><figcaption>Irradiance at the pipe exit face</figcaption></figure>
+                    </div>
+                </div>
+
+                <div class="ex-block">
+                    <div class="ex-title">Exercise 3 · Polarized reflection off titanium</div>
+                    <p class="ex-desc">Titanium sample (n ≈ 1.876) illuminated with -45° linear polarized light at the Brewster angle (61.94°); the polarization maps show the reflected light becoming elliptically/circularly polarized.</p>
+                    <div class="imgrow tri">
+                        <figure><img src="rt-ex3-design.jpg" alt="Titanium surface and detector definition" loading="lazy"><figcaption>Sample design: titanium surface + detector</figcaption></figure>
+                        <figure><img src="rt-ex3-trace.jpg" alt="Ray trace of the polarized beam reflecting off titanium" loading="lazy"><figcaption>Polarized beam reflecting at Brewster angle</figcaption></figure>
+                        <figure><img src="rt-ex3-polmap.jpg" alt="Polarization map of incident rays at the titanium surface" loading="lazy"><figcaption>Polarization map at the titanium surface</figcaption></figure>
+                    </div>
+                </div>
+                <div class="labnote-wrap">
+                    <figure class="labnote">
+                        <img src="labnote-raytracing.jpg" alt="Page from the ray tracing laboratory report" loading="lazy">
+                        <figcaption>from the report</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="mini reveal">
+                <h4>Wavefront Analysis</h4>
+                <div class="org">Optical Instruments Laboratory (OI 3)</div>
+                <p>Wavefront measurement and aberration analysis of optical systems using laboratory wavefront sensing, evaluating aberration content from measured wavefront maps.</p>
+                <div class="imgrow">
+                    <figure><img src="wavefront1.png" alt="Shack-Hartmann wavefront sensing principle from the report" loading="lazy"><figcaption>Shack-Hartmann wavefront sensing (from the report)</figcaption></figure>
+                    <figure><img src="wavefront2.png" alt="Wavefront aberration analysis" loading="lazy"><figcaption>Aberration analysis output</figcaption></figure>
+                </div>
+                <div class="labnote-wrap">
+                    <figure class="labnote">
+                        <img src="labnote-wavefront.jpg" alt="Page from the wavefront analysis laboratory report" loading="lazy">
+                        <figcaption>from the report</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="mini reveal">
+                <h4>Microscopy</h4>
+                <div class="org">Laboratory Course</div>
+                <p>Practical microscopy techniques: imaging modes, resolution limits, and quantitative image evaluation of specimens.</p>
+                <div class="imgrow">
+                    <figure><img src="micro-output1.jpg" alt="Microscopy laboratory result image" loading="lazy"><figcaption>Acquired specimen image</figcaption></figure>
+                    <figure><img src="micro-output2.jpg" alt="Microscopy quantitative evaluation" loading="lazy"><figcaption>Quantitative image evaluation</figcaption></figure>
+                </div>
+                <div class="labnote-wrap">
+                    <figure class="labnote">
+                        <img src="labnote-microscopy.jpg" alt="Page from the microscopy laboratory report" loading="lazy">
+                        <figcaption>from the report</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="mini reveal">
+                <h4>Surveying Instruments: Principles &amp; Application</h4>
+                <div class="org">Laboratory Course (OI 3)</div>
+                <p>Working principles, calibration, and measurement application of precision optical surveying instruments.</p>
+                <div class="imgrow">
+                    <figure style="grid-column:1/-1"><img src="surveying1.jpg" alt="Surveying instrument measurement setup" loading="lazy" style="height:200px"><figcaption>Measurement setup from the laboratory course</figcaption></figure>
+                </div>
+                <div class="labnote-wrap">
+                    <figure class="labnote">
+                        <img src="labnote-surveying.jpg" alt="Page from the surveying instruments laboratory report" loading="lazy">
+                        <figcaption>from the report</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="publications">
+        <div class="section-head reveal">
+            <span class="idx">02 / Publications</span>
+            <h2>Peer-reviewed work</h2>
+        </div>
+        <div class="pub reveal">
+            <div>
+                <h4>Flexural and Crashworthiness Studies of Friction Stir Welded Aluminum Alloy Pipes</h4>
+                <div class="venue">Senthil S.M., Sradeep M., <strong>Sharan K.</strong>, Selvapravin P.A. · Materials Today: Proceedings · ICFMMP 2021 · Elsevier</div>
+            </div>
+            <a class="doi" href="https://doi.org/10.1016/j.matpr.2021.07.142" target="_blank" rel="noopener">doi:10.1016/j.matpr.2021.07.142</a>
+        </div>
+        <div class="pub reveal">
+            <div>
+                <h4>Linear Motion Humidifier for Mushroom Cultivation</h4>
+                <div class="venue">Santhosh P., <strong>Sharan K.</strong>, Paramasivam K., Subash S. · 7th International Conference on Computing in Engineering &amp; Technology (ICCET 2022) · IET</div>
+            </div>
+            <a class="doi" href="https://doi.org/10.1049/icp.2022.0616" target="_blank" rel="noopener">doi:10.1049/icp.2022.0616</a>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-head reveal">
+            <span class="idx">03 / Skills</span>
+            <h2>Tools and methods</h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-col reveal">
+                <h4>Optical instrumentation &amp; imaging</h4>
+                <ul>
+                    <li>EMVA 1288 image sensor characterization</li>
+                    <li>Machine vision &amp; optical metrology</li>
+                    <li>Swept-source OCT</li>
+                    <li>Optical calibration &amp; alignment</li>
+                    <li>Interferometry &amp; fiber/laser assembly</li>
+                </ul>
+            </div>
+            <div class="skill-col reveal">
+                <h4>Software &amp; analysis</h4>
+                <ul>
+                    <li>Python: scientific computing, image &amp; signal processing, automation</li>
+                    <li>MATLAB &amp; data visualization</li>
+                    <li>Dispersion compensation, k-space resampling, FFT pipelines</li>
+                    <li>Zemax &amp; TracePro optical design</li>
+                </ul>
+            </div>
+            <div class="skill-col reveal">
+                <h4>Mechanical &amp; systems</h4>
+                <ul>
+                    <li>SolidWorks &amp; AutoCAD (certified)</li>
+                    <li>Opto-mechanical design &amp; 3D-printed prototyping</li>
+                    <li>Requirements engineering &amp; systems integration</li>
+                    <li>Test &amp; validation, QC, technical documentation</li>
+                </ul>
+            </div>
+        </div>
+        <div class="honesty reveal">
+            <strong>Languages:</strong> Tamil (native) · English (fluent) · German (B1, actively improving).
+            This list reflects tools I have genuinely used in project work; I keep it honest rather than exhaustive.
+        </div>
+    </section>
+
+    <section id="certifications">
+        <div class="section-head reveal">
+            <span class="idx">03.b / Certifications</span>
+            <h2 style="font-size:1.65rem">Documented skills and results</h2>
+            <p>A formal certification, plus the participation certificate for the competition referenced
+                in the Electric Bike project above.</p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-card reveal">
+                <span class="cert-ribbon">Certified</span>
+                <div class="cert-img-wrap">
+                    <img src="autocad-certificate.jpg" alt="AutoCAD course completion certificate" loading="lazy">
+                </div>
+                <div class="cert-body">
+                    <h4>AutoCAD Course Certificate</h4>
+                    <div class="cert-meta">2D/3D CAD drafting · underpins the mechanical &amp; opto-mechanical design work above</div>
+                </div>
+            </div>
+            <div class="cert-card reveal">
+                <span class="cert-ribbon">2020</span>
+                <div class="cert-img-wrap">
+                    <img src="etwdc-certificate.jpg" alt="Certificate of participation, SAEISS Electric Two Wheeler Design Competition 2020" loading="lazy">
+                </div>
+                <div class="cert-body">
+                    <h4>SAEISS Electric Two-Wheeler Design Competition</h4>
+                    <div class="cert-meta">Certificate of participation · Team ENVISION, Kongu Engineering College</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-card reveal">
+            <div>
+                <span class="idx" style="color:var(--accent-2)">04 / Contact</span>
+                <h2>Let's build precise things.</h2>
+                <p>Open to optical engineering, photonics, instrumentation, machine vision, and R&amp;D roles
+                    across DACH and Europe. Based in Bremen with a German post-study residence permit.</p>
+            </div>
+            <div class="contact-links">
+                <a href="mailto:sharankanda16@gmail.com">sharankanda16@gmail.com</a>
+                <a href="https://linkedin.com/in/sharan-kandasamy-5b2436217" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="#" title="Add your CV PDF link here">Download CV</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>© 2026 Sharan Kandasamy</span>
+        <span class="mono">λ = 555 nm · f/8 · Bremen</span>
+    </footer>
+
+    <script>
+        (function() {
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function fillGauges(scope) {
+                scope.querySelectorAll('.gauge-ring-fg').forEach(function(c) {
+                    var pct = parseFloat(c.getAttribute('data-pct'));
+                    var circ = 251.33;
+                    c.style.strokeDashoffset = circ * (1 - pct / 100);
+                });
+            }
+
+            var els = document.querySelectorAll(
+                '.mount, .mini, .pub, .skill-col, .section-head, .contact-card, .cert-card');
+            els.forEach(function(el) { el.classList.add('reveal'); });
+
+            if (reduced) {
+                document.querySelectorAll('animateMotion').forEach(function(a) { a.remove(); });
+            }
+
+            if (reduced || !('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('in');
+                    fillGauges(el); });
+                document.querySelectorAll('.mount').forEach(function(m) { m.classList.add('in-view'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in');
+                        fillGauges(e.target);
+                        if (e.target.classList.contains('mount')) {
+                            e.target.classList.add('in-view');
+                        }
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            els.forEach(function(el) { io.observe(el); });
+            // Also observe mount elements specifically for the in-view class
+            document.querySelectorAll('.mount').forEach(function(m) {
+                var mountIO = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(e) {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('in-view');
+                            mountIO.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                mountIO.observe(m);
+            });
+        })();
+
+        /* ---------- Spectrum scroll-progress bar ---------- */
+        (function() {
+            var bar = document.createElement('div');
+            bar.id = 'spectrum-bar';
+            bar.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(bar);
+            var ticking = false;
+
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+                ticking = false;
+            }
+            window.addEventListener('scroll', function() {
+                if (!ticking) { requestAnimationFrame(update);
+                    ticking = true; }
+            }, { passive: true });
+            update();
+        })();
+
+        /* ---------- Nav scroll effect ---------- */
+        (function() {
+            var nav = document.getElementById('navbar');
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        if (window.scrollY > 40) {
+                            nav.classList.add('scrolled');
+                        } else {
+                            nav.classList.remove('scrolled');
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+
+        /* ---------- Lightbox ---------- */
+        (function() {
+            var lb = document.createElement('div');
+            lb.className = 'lightbox';
+            lb.setAttribute('role', 'dialog');
+            lb.setAttribute('aria-hidden', 'true');
+            lb.innerHTML = '<button class="lb-close" aria-label="Close image">&times;</button>' +
+                '<figure><img alt=""><figcaption></figcaption></figure>' +
+                '<div class="lb-hint">Click anywhere or press Esc to close</div>';
+            document.body.appendChild(lb);
+            var lbImg = lb.querySelector('img');
+            var lbCap = lb.querySelector('figcaption');
+
+            function openLB(src, cap) {
+                lbImg.src = src;
+                lbCap.textContent = cap || '';
+                lb.classList.add('open');
+                lb.setAttribute('aria-hidden', 'false');
+            }
+
+            function closeLB() {
+                lb.classList.remove('open');
+                lb.setAttribute('aria-hidden', 'true');
+            }
+            lb.addEventListener('click', closeLB);
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLB();
+            });
+
+            var targets = document.querySelectorAll('.imgrow img, .cert-card img, .labnote img');
+            targets.forEach(function(img) {
+                img.tabIndex = 0;
+                img.setAttribute('role', 'button');
+                img.setAttribute('aria-label', 'Enlarge image: ' + (img.alt || 'photo'));
+
+                function trigger(e) {
+                    e.stopPropagation();
+                    var fig = img.closest('figure');
+                    var capEl = fig ? fig.querySelector('figcaption') : null;
+                    openLB(img.currentSrc || img.src, capEl ? capEl.textContent : img.alt);
+                }
+                img.addEventListener('click', trigger);
+                img.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault();
+                        trigger(e); }
+                });
+            });
+        })();
+
+        /* ---------- Cursor glow ---------- */
+        (function() {
+            var glow = document.getElementById('cursor-glow');
+            if (!glow) return;
+            var ticking = false;
+            var mx = 0,
+                my = 0;
+            var visible = false;
+            document.addEventListener('mousemove', function(e) {
+                mx = e.clientX;
+                my = e.clientY;
+                if (!visible) {
+                    glow.style.opacity = '1';
+                    visible = true;
+                }
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        glow.style.left = mx + 'px';
+                        glow.style.top = my + 'px';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+            document.addEventListener('mouseleave', function() {
+                glow.style.opacity = '0';
+                visible = false;
+            });
+        })();
+    </script>
+</body>
+</html>
